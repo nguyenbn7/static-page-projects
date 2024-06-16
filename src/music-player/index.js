@@ -28,7 +28,7 @@ const songs = [
   },
 ];
 
-const base = '/music-player';
+const base = `${import.meta.env.BASE_URL}music-player`;
 
 const PLAY_ICON = '<i class="fa-solid fa-play"></i>';
 const PAUSE_ICON = '<i class="fa-solid fa-pause"></i>';
