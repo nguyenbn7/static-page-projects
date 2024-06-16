@@ -18,7 +18,6 @@ function getHtmlEntries() {
 
   // Create entries for each HTML file
   htmlFiles.forEach((file) => {
-    console.log(file);
     const key =
       file
         .replace(/\.[^/.]+$/, '')
