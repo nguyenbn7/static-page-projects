@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import path from 'path';
 import fs from 'fs';
 
@@ -32,22 +32,27 @@ function getHtmlEntries() {
   return entries;
 }
 
-function deployToGithubPage() {
-  try {
-    return import.meta.env.VITE_GITHUB_REPOS;
-  } catch (error) {
-    return '/';
-  }
+/**
+ * @param {string} mode
+ */
+function deployToGithubPage(mode) {
+  const appEnv = loadEnv(mode, process.cwd());
+  return appEnv?.VITE_GITHUB_REPO ?? '/';
 }
 
-export default defineConfig({
-  base: deployToGithubPage(),
-  root: './src',
-  build: {
-    outDir: '../dist',
-    emptyOutDir: true,
-    rollupOptions: {
-      input: getHtmlEntries(),
+// @ts-ignore
+export default ({ mode }) => {
+  const base = deployToGithubPage(mode);
+
+  return defineConfig({
+    base: base,
+    root: './src',
+    build: {
+      outDir: '../dist',
+      emptyOutDir: true,
+      rollupOptions: {
+        input: getHtmlEntries(),
+      },
     },
-  },
-});
+  });
+};
