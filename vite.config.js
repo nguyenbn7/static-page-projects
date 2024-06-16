@@ -32,20 +32,12 @@ function getHtmlEntries() {
   return entries;
 }
 
-/**
- * @param {string} mode
- */
-function deployToGithubPage(mode) {
-  const appEnv = loadEnv(mode, process.cwd());
-  return appEnv?.VITE_GITHUB_REPO ?? '/';
-}
-
 // @ts-ignore
 export default ({ mode }) => {
-  const base = deployToGithubPage(mode);
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
   return defineConfig({
-    base: base,
+    base: process.env.VITE_GITHUB_REPO ?? '/',
     root: './src',
     build: {
       outDir: '../dist',
