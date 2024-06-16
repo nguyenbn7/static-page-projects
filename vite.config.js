@@ -32,7 +32,16 @@ function getHtmlEntries() {
   return entries;
 }
 
+function deployToGithubPage() {
+  try {
+    return import.meta.env.VITE_GITHUB_REPOS;
+  } catch (error) {
+    return '/';
+  }
+}
+
 export default defineConfig({
+  base: deployToGithubPage(),
   root: './src',
   build: {
     outDir: '../dist',
