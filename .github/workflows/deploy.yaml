@@ -41,6 +41,7 @@ jobs:
           touch .env
           echo VITE_GITHUB_REPO=/websites/ >> .env
           echo VITE_UNPLASH_API_KEY=${{ secrets.UNPLASH_API_KEY }} >> .env
+          echo VITE_REDIRECT_HOME_URL=https://nguyenbn7.github.io/portfolio >> .env
       - name: Install dependencies
         run: npm ci
       - name: Build
